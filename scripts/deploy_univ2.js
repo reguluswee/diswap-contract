@@ -20,7 +20,7 @@ async function main() {
     // 部署 WETH 合约
     const WDIS = await ethers.getContractFactory("WDIS");
     const wids = await WDIS.deploy();
-    console.log("TST deployed to:", weth.target);
+    console.log("TST deployed to:", wids.target);
 
     const UniswapV2Factory = await ethers.getContractFactory("UniswapV2Factory");
     const uniswapV2Factory = await UniswapV2Factory.deploy(owner.address);
