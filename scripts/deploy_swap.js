@@ -17,10 +17,12 @@ async function main() {
 
     const [owner] = await ethers.getSigners();
 
+    let WDIS_ADDRESS = "0xF9F1234761Ae9DE3c576C5491631C6FC0d213b5E"
+
     // 部署 WETH 合约
-    const WDIS = await ethers.getContractFactory("WDIS");
-    const wids = await WDIS.deploy();
-    console.log("TST deployed to:", wids.target);
+    // const WDIS = await ethers.getContractFactory("WDIS");
+    // const wids = await WDIS.deploy();
+    // console.log("WDIS deployed to:", wids.target);
 
     const UniswapV2Factory = await ethers.getContractFactory("UniswapV2Factory");
     const uniswapV2Factory = await UniswapV2Factory.deploy(owner.address);
@@ -28,7 +30,7 @@ async function main() {
     console.log('UniswapV2Factory deployed to:', uniswapV2Factory.target);
 
     const UniswapV2Router02 = await ethers.getContractFactory("UniswapV2Router02");
-    const uniswapV2Router02 = await UniswapV2Router02.deploy(uniswapV2Factory.target, wids.target);
+    const uniswapV2Router02 = await UniswapV2Router02.deploy(uniswapV2Factory.target, WDIS_ADDRESS);//wids.target);
 
     console.log('UniswapV2Router02 deployed to:', uniswapV2Router02.target);
 

@@ -198,13 +198,4 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
     function sync() external lock {
         _update(IERC20(token0).balanceOf(address(this)), IERC20(token1).balanceOf(address(this)), reserve0, reserve1);
     }
-
-    // function _approve(address owner, address spender, uint value) private {
-    //     allowance[owner][spender] = value;
-    //     emit Approval(owner, spender, value);
-    // }
-
-    // function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external override(UniswapV2ERC20, IUniswapV2Pair) {
-    //     super.permit(owner, spender, value, deadline, v, r, s);
-    // }
 }

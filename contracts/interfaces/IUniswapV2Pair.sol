@@ -1,8 +1,8 @@
-pragma solidity ^0.8.10;
+pragma solidity >=0.5.0;
 
 import "./IUniEvent.sol";
 
-interface IUniswapV2Pair is IUni20 {
+interface IUniswapV2Pair is IUniEvent {
     // event Approval(address indexed owner, address indexed spender, uint value);
     // event Transfer(address indexed from, address indexed to, uint value);
 
@@ -17,7 +17,7 @@ interface IUniswapV2Pair is IUni20 {
     // function transfer(address to, uint value) external returns (bool);
     // function transferFrom(address from, address to, uint value) external returns (bool);
 
-    // function DOMAIN_SEPARATOR() external view returns (bytes32);
+    // function DOMAIN_SEPARATOR() external view returns (bytes32); //already defined in other way
     // function PERMIT_TYPEHASH() external pure returns (bytes32);
     // function nonces(address owner) external view returns (uint);
 

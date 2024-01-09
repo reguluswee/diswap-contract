@@ -67,5 +67,8 @@
   "packageManager": "pnpm@8.12.0",
   "prettier": {
     "trailingComma": "all"
+  },
+  "dependencies": {
+    "@uniswap/lib": "^4.0.1-alpha"
   }
 }
