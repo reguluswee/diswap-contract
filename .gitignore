@@ -17,3 +17,5 @@ node_modules
 /coverage.json
 
 yarn.lock
+
+operator/
