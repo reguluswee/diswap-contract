@@ -6,21 +6,27 @@ import "./ILeetSwap.sol";
 
 contract DISW is ERC20("DisSwap", "DISW") {
     using SafeMath for uint256;
-    
+
     uint256 public constant TOTAL_SUPPLY = 1_000_000_000 ether;
-    uint256 public constant FIXED_TRADE_FEE = 1;
+
+    address public manager;
+
+    uint256 public sellFeeRate = 1;
     address public feeAddress;
 
     ISwapRouter private diswapV2Router;
     address public diswapV2Pair;
 
+    mapping(address => bool) public whiteFeeList;
+
     event PairCreated(address pairAddr);
 
     constructor(address _target, address _feeAddress, address _swapRouter, address _wdis) {
         require(_target != address(0) && _feeAddress != address(0), "manage address setting invalid");
-        
-        initPair(_swapRouter, _wdis);
+        feeAddress = _feeAddress;
+        manager = msg.sender;
 
+        initPair(_swapRouter, _wdis);
         super._mint(_target, TOTAL_SUPPLY);
     }
 
@@ -33,16 +39,19 @@ contract DISW is ERC20("DisSwap", "DISW") {
         require(to != address(0), "ERC20: transfer to the zero address");
         require(amount > 0, "amount must gt 0");
 
-        if(from != diswapV2Pair && to != diswapV2Pair) {
+        if((from != diswapV2Pair && to != diswapV2Pair)
+            || feeAddress == address(0) || sellFeeRate == 0 || whiteFeeList[msg.sender]
+        ) {
             super._transfer(from, to, amount);
             return;
         }
 
-        if(to == diswapV2Pair) { // SELL DIS
-            super._transfer(from, to, amount.mul(100 - FIXED_TRADE_FEE).div(100));
-            super._transfer(from, address(feeAddress), amount.mul(FIXED_TRADE_FEE).div(100));
-            return;
+        if(to == diswapV2Pair) { // SELL DIS or Add Liquidity
+            uint256 feeAmount = amount.mul(sellFeeRate).div(100);
+            super._transfer(from, feeAddress, feeAmount);
+            amount -= feeAmount;
         }
+        super._transfer(from, to, amount);
     }
 
     function initPair(address _swap, address _targetToken) private {
@@ -53,5 +62,21 @@ contract DISW is ERC20("DisSwap", "DISW") {
 
         _approve(address(this), address(this),type(uint256).max);
         emit PairCreated(diswapV2Pair);
+    }
+
+    function configWhiteFeeList(address _user, bool _feeClose) external {
+        require(msg.sender == manager, "need manager to operate");
+        whiteFeeList[_user] = _feeClose;
+    }
+
+    function configFee(address _feeAddress, uint256 _feeRate) external {
+        require(msg.sender == manager, "need manager to operate");
+        feeAddress = _feeAddress;
+        sellFeeRate = _feeRate;
+    }
+
+    function configManager(address _newManager) external {
+        require(msg.sender == manager, "need manager to operate");
+        manager = _newManager;
     }
 }

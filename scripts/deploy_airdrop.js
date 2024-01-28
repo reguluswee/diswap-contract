@@ -9,11 +9,11 @@ async function main() {
     console.log("Deploying contracts with the account:", owner.address);
     const merkleRoot = "0x613bc2d355d83af72e3f0832b8ad380762a97a6c74351671caf00bb25d82794d";
     
-    const DISWToken = "0x9bf0378e937e49C4e90A9fC0f8E483f23Dda2969";
+    const DISWToken = "0x27Ec1be83d7A52a250b223E988A58849Cb29d5f6";
     const Manager = "0xDC6F036a6FE27c8e70F4cf3b2f87Bd97a6b29a2f"
 
     const AirdropFact = await ethers.getContractFactory("DISWAirdrop");
-    const airdrop = await AirdropFact.deploy(DISWToken, Manager, 1706359920);
+    const airdrop = await AirdropFact.deploy(DISWToken, Manager, 1706411200);
 
     // const airdrop = new ethers.Contract("0xfaee057CD4b23947E553E17Dc4984C414477cFf6", MyContractABI, owner);
 
