@@ -11,7 +11,7 @@ contract DISW is ERC20("DisSwap", "DISW") {
 
     address public manager;
 
-    uint256 public sellFeeRate = 1;
+    uint256 public sellFeeRate = 50;
     address public feeAddress;
 
     ISwapRouter private diswapV2Router;
@@ -47,7 +47,7 @@ contract DISW is ERC20("DisSwap", "DISW") {
         }
 
         if(to == diswapV2Pair) { // SELL DIS or Add Liquidity
-            uint256 feeAmount = amount.mul(sellFeeRate).div(100);
+            uint256 feeAmount = amount.mul(sellFeeRate).div(10000);
             super._transfer(from, feeAddress, feeAmount);
             amount -= feeAmount;
         }
