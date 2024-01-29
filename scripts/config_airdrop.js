@@ -9,8 +9,8 @@ async function main() {
 
     console.log("Deploying contracts with the account:", owner.address);
     
-    const DISWToken = "0x9bf0378e937e49C4e90A9fC0f8E483f23Dda2969";
-    const AirdropAddr = "0xe49E5c52c7135B55eb4E72f64f047A55AaC8EF4C"
+    const DISWToken = "0xEcF0a3c9193a66cBBFeeDa9Aa4b05C3e8EA1c53C";
+    const AirdropAddr = "0x70662Eb36228dDC7C81051F00e5F5153d3F7897C"
 
     const AirdropFact = await ethers.getContractFactory("DISWAirdrop");
 
@@ -20,14 +20,15 @@ async function main() {
     const dispair = await diswToken.diswapV2Pair();
     console.log('输出创建的pair', dispair);
 
+    // await airdrop.setMerkleRoot("0x94e9ee217a8cb3fe8c37ad904a579cf37e3bab85a3051e6a302908dc02b5cd66")
+    const readMerkle = await airdrop.merkleRoot()
+    console.log("新的根", readMerkle)
+
+
     // const amount = hre.ethers.parseEther("100000000");
-
     // await diswToken.approve(AirdropAddr, amount)
-
     // const gasLimit = 500000
     // const r = await airdrop.notifyReward(amount, { gasLimit: gasLimit })
-
-    // console.log("setting merkle root:", r)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
