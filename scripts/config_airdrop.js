@@ -20,7 +20,7 @@ async function main() {
     const dispair = await diswToken.diswapV2Pair();
     console.log('输出创建的pair', dispair);
 
-    // await airdrop.setMerkleRoot("0x94e9ee217a8cb3fe8c37ad904a579cf37e3bab85a3051e6a302908dc02b5cd66")
+    // await airdrop.setMerkleRoot("0x5768039d4e4e9e33118a25267424ffa7b9165e940a4f94ac1f460d43eede675a")
     const readMerkle = await airdrop.merkleRoot()
     console.log("新的根", readMerkle)
 
